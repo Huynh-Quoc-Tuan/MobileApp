@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">1786</string>
+    <string name="add_hike">Add Hike</string>
+    <string name="name">Name</string>
+    <string name="location">Location</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
+
 </resources>
