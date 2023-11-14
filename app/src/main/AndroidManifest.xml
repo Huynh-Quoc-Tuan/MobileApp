@@ -22,8 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddHikeActivity" />
-        <activity android:name=".ViewHikesActivity" />
+
+        <activity android:name=".ConfirmHikingActivity" />
 
     </application>
 
