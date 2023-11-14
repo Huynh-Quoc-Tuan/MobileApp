@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewHikesActivity extends AppCompatActivity {
@@ -22,10 +23,10 @@ public class ViewHikesActivity extends AppCompatActivity {
         mListView = findViewById(R.id.hikesListView);
 
         // Lấy dữ liệu từ Database
-        DatabaseHelper dbHelper = new DatabaseHelper(ViewHikesActivity.this);
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
         List<Hiking> hikes = dbHelper.getAllHikes(); // Giả định bạn có phương thức này trong dbHelper
 
-        mAdapter = new HikeAdapter(ViewHikesActivity.this, hikes);
+        mAdapter = new HikeAdapter(this, hikes);
         mListView.setAdapter(mAdapter);
     }
 }

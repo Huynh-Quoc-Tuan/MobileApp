@@ -82,8 +82,11 @@ public class ConfirmHikingActivity extends AppCompatActivity {
 
                         DatabaseHelper dbHelper = new DatabaseHelper(ConfirmHikingActivity.this); // context ở đây là Context từ Activity hoặc Fragment của bạn
                         boolean result = dbHelper.addHike(newHike);
-                        if(result)
-                            Toast.makeText(ConfirmHikingActivity.this,"Data Inserted",Toast.LENGTH_LONG).show();
+                        if(result) {
+                            Toast.makeText(ConfirmHikingActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(ConfirmHikingActivity.this, ViewHikesActivity.class);
+                            startActivity(intent);
+                        }
                         else
                             Toast.makeText(ConfirmHikingActivity.this,"THAT BAI ROI MINH OI =(((",Toast.LENGTH_LONG).show();
                         dbHelper.close();

@@ -84,7 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<Hiking> getAllHikes() {
         List<Hiking> hikes = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM hiking", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM hiking", null,null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -101,6 +101,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         cursor.close();
         db.close();
+
         return hikes;
     }
 }
