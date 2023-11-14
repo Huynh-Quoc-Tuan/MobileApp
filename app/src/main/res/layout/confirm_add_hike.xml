@@ -53,8 +53,9 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/nameOfTheHikeTestView"
+                android:id="@+id/nameOfTheHikeTextView"
                 android:layout_width="match_parent"
+                android:textSize="20sp"
                 android:layout_height="wrap_content" />
 
             <View
@@ -69,10 +70,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/locationTestView"
+                android:id="@+id/locationTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/baseline_add_location_24" />
+                android:textSize="20sp"/>
 
             <View
                 android:layout_width="wrap_content"
@@ -85,11 +86,11 @@
                 android:text="Date of the hike"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/dateOfTheHike"
+            <TextView
+                android:id="@+id/dateOfTheHikeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/baseline_calendar_month_24"
+                android:textSize="20sp"
                 android:inputType="textEmailAddress" />
 
             <View
@@ -103,10 +104,11 @@
                 android:text="Lenght the hike"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/lengthTheHike"
+            <TextView
+                android:id="@+id/lengthTheHikeTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:inputType="textEmailAddress" />
 
             <View
@@ -195,15 +197,16 @@
                 android:text="Description"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/description"
+            <TextView
+                android:id="@+id/descriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:inputType="textEmailAddress" />
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="10dp" />
+                android:layout_height="50dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -213,14 +216,14 @@
                 <com.google.android.material.button.MaterialButton
                     android:layout_width="120dp"
                     android:layout_height="60dp"
-                    android:text="Back"
+                    android:text="Edit"
                     app:cornerRadius="32dp" />
 
                 <View
                     android:layout_width="10dp"
                     android:layout_height="10dp" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/addHikeButton"
                     android:layout_width="120dp"
                     android:layout_height="60dp"

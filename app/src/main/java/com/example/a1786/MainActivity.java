@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button viewHikesButton, submitBtn;
+    private Button viewBtn, submitBtn;
     private RadioGroup levelOfDiff, parkingAvailable;
     private RadioButton levelOfDiff1, levelOfDiff2, levelOfDiff3, parkingAvailableYes, parkingAvailableNo;
     private EditText nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, description;
@@ -24,6 +24,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.hiking123);
         findById();
 
+        viewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ViewHikesActivity.class);
+                startActivity(intent);
+            }
+        });
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         dateOfTheHike = findViewById(R.id.dateOfTheHike);
         description = findViewById(R.id.description);
         submitBtn = findViewById(R.id.submitBtn);
+        viewBtn = findViewById(R.id.viewBtn);
 
         parkingAvailable = findViewById(R.id.parkingAvailable);
         parkingAvailableYes = findViewById(R.id.parkingAvailableYes);

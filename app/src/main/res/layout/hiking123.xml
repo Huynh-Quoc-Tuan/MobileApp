@@ -212,17 +212,18 @@
                     android:layout_height="match_parent"
                     android:gravity="end">
 
-                    <com.google.android.material.button.MaterialButton
+                    <Button
+                        android:id="@+id/viewBtn"
                         android:layout_width="120dp"
                         android:layout_height="60dp"
-                        android:text="Back"
+                        android:text="View"
                         app:cornerRadius="32dp" />
 
                     <View
                         android:layout_width="10dp"
                         android:layout_height="10dp" />
 
-                    <com.google.android.material.button.MaterialButton
+                    <Button
                         android:id="@+id/submitBtn"
                         android:layout_width="120dp"
                         android:layout_height="60dp"

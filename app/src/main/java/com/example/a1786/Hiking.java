@@ -5,19 +5,13 @@ public class Hiking {
     private String name;
     private String location;
     private String date;
-    private boolean parkingAvailable;
     private String length;
-    private String difficulty;
+    private String level;
 
-    public Hiking(int id, String name, String location, String date, boolean parkingAvailable, String length, String difficulty) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.date = date;
-        this.parkingAvailable = parkingAvailable;
-        this.length = length;
-        this.difficulty = difficulty;
+    public Hiking() {
     }
+
+    private String parking;
 
     public int getId() {
         return id;
@@ -47,14 +41,6 @@ public class Hiking {
         this.date = date;
     }
 
-    public boolean isParkingAvailable() {
-        return parkingAvailable;
-    }
-
-    public void setParkingAvailable(boolean parkingAvailable) {
-        this.parkingAvailable = parkingAvailable;
-    }
-
     public String getLength() {
         return length;
     }
@@ -63,11 +49,40 @@ public class Hiking {
         this.length = length;
     }
 
-    public String getDifficulty() {
-        return difficulty;
+    public String getLevel() {
+        return level;
     }
 
-    public void setDifficulty(String difficulty) {
-        this.difficulty = difficulty;
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getParking() {
+        return parking;
+    }
+
+    public void setParking(String parking) {
+        this.parking = parking;
+    }
+
+    public String getDiscrip() {
+        return discrip;
+    }
+
+    public void setDiscrip(String discrip) {
+        this.discrip = discrip;
+    }
+
+    private String discrip;
+
+    public Hiking(int id, String name, String location, String date, String length, String level, String parking, String discrip) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.date = date;
+        this.length = length;
+        this.level = level;
+        this.parking = parking;
+        this.discrip = discrip;
     }
 }

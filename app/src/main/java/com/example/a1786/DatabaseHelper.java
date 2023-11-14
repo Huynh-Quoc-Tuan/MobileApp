@@ -1,105 +1,106 @@
 package com.example.a1786;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // Database Information
-    static final String DB_NAME = "HIKING.DB";
-
-    // database version
-    static final int DB_VERSION = 1;
-
-    // Table Names
-    static final String TABLE_USERS = "users";
-    static final String TABLE_HIKES = "hikes";
-    static final String TABLE_IMAGES = "images";
-
-    // Common column names
-    static final String COLUMN_ID = "_id";
-
-    // USERS Table - column names
-    static final String COLUMN_USERNAME = "username";
-    static final String COLUMN_EMAIL = "email";
-
-    // HIKES Table - column names
-    static final String COLUMN_NAME = "name";
-    static final String COLUMN_LOCATION = "location";
-    static final String COLUMN_DESCRIPTION = "description";
-
-    // IMAGES Table - column names
-    static final String COLUMN_PATH = "path";
-    static final String COLUMN_HIKE_ID = "hike_id";
-
-    // Table Create Statements
-    // User table create statement
-    private static final String CREATE_TABLE_USERS = "CREATE TABLE "
-            + TABLE_USERS + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_USERNAME + " TEXT,"
-            + COLUMN_EMAIL + " TEXT" + ")";
-
-    // Hike table create statement
-    private static final String CREATE_TABLE_HIKES = "CREATE TABLE "
-            + TABLE_HIKES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_NAME + " TEXT,"
-            + COLUMN_LOCATION + " TEXT,"
-            + COLUMN_DESCRIPTION + " TEXT" + ")";
-
-    // Image table create statement
-    private static final String CREATE_TABLE_IMAGES = "CREATE TABLE "
-            + TABLE_IMAGES + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + COLUMN_PATH + " TEXT,"
-            + COLUMN_HIKE_ID + " INTEGER,"
-            + "FOREIGN KEY(" + COLUMN_HIKE_ID + ") REFERENCES "
-            + TABLE_HIKES + "(" + COLUMN_ID + "))";
+    private static final String DATABASE_NAME = "hikingDatabase";
+    private static final int DATABASE_VERSION = 1;
 
     public DatabaseHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // creating required tables
-        db.execSQL(CREATE_TABLE_USERS);
-        db.execSQL(CREATE_TABLE_HIKES);
-        db.execSQL(CREATE_TABLE_IMAGES);
+        String CREATE_TABLE_HIKING = "CREATE TABLE hiking (" +
+                "id INTEGER PRIMARY KEY," +
+                "name TEXT," +
+                "location TEXT," +
+                "date TEXT," +
+                "length TEXT," +
+                "level TEXT," +
+                "parking TEXT" + ")";
+        db.execSQL(CREATE_TABLE_HIKING);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // on upgrade drop older tables
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HIKES);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_IMAGES);
-
-        // create new tables
+        db.execSQL("DROP TABLE IF EXISTS hiking");
         onCreate(db);
     }
 
-    // ADD AND GET HIKING
-    public boolean addHike(String name, String location, String description) {
+    public boolean addHike(Hiking hike) {
         SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", hike.getName());
+        values.put("location", hike.getLocation());
+        values.put("date", hike.getDate());
+        values.put("length", hike.getLength());
+        values.put("level", hike.getLevel());
+        values.put("parking", hike.getParking());
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_NAME, name);
-        contentValues.put(COLUMN_LOCATION, location);
-        contentValues.put(COLUMN_DESCRIPTION, description);
-
-        long result = db.insert(TABLE_HIKES, null, contentValues);
+        long result = db.insert("hiking", null, values);
         db.close();
-
-        // result will be -1 if there was an error inserting the data
         return result != -1;
     }
 
-    public Cursor getAllHikes() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_HIKES, null);
+    public boolean updateHike(Hiking hike) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", hike.getName());
+        values.put("location", hike.getLocation());
+        values.put("date", hike.getDate());
+        values.put("length", hike.getLength());
+        values.put("level", hike.getLevel());
+        values.put("parking", hike.getParking());
+
+        int result = db.update("hiking", values, "id = ?", new String[]{String.valueOf(hike.getId())});
+        db.close();
+        return result > 0;
     }
 
+    public boolean deleteHike(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete("hiking", "id = ?", new String[]{String.valueOf(id)});
+        db.close();
+        return result > 0;
+    }
 
+    public Cursor getAllHikesCursor() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM hiking", null);
+    }
+
+    @SuppressLint("Range")
+    public List<Hiking> getAllHikes() {
+        List<Hiking> hikes = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM hiking", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Hiking hike = new Hiking();
+                hike.setName(cursor.getString(cursor.getColumnIndex("name")));
+                hike.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+                hike.setDate(cursor.getString(cursor.getColumnIndex("date")));
+                hike.setLength(cursor.getString(cursor.getColumnIndex("length")));
+                hike.setLevel(cursor.getString(cursor.getColumnIndex("level")));
+                hike.setParking(cursor.getString(cursor.getColumnIndex("parking")));
+                hikes.add(hike);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return hikes;
+    }
 }
