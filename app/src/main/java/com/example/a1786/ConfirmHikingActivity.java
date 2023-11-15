@@ -1,11 +1,9 @@
 package com.example.a1786;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -26,7 +24,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set the content view to the activity_main layout
-        setContentView(R.layout.confirm_add_hike);
+        setContentView(R.layout.activity_view_detail_hike);
         databaseHelper = new DatabaseHelper(this);
 
         findById();
@@ -84,7 +82,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                         boolean result = dbHelper.addHike(newHike);
                         if(result) {
                             Toast.makeText(ConfirmHikingActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(ConfirmHikingActivity.this, ViewHikesActivity.class);
+                            Intent intent = new Intent(ConfirmHikingActivity.this, ShowHikesActivity.class);
                             startActivity(intent);
                         }
                         else
@@ -116,7 +114,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
     }
 
     private void goToViewPage() {
-        Intent intent = new Intent(ConfirmHikingActivity.this, ViewHikesActivity.class);
+        Intent intent = new Intent(ConfirmHikingActivity.this, ShowHikesActivity.class);
         startActivity(intent);
     }
 }

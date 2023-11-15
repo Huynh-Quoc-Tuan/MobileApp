@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- activity_view_hiking.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ShowHikesActivity">
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="Data"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/textViewLocation"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/textViewName"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Location"-->
+<!--        android:textSize="18sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textViewDate"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/textViewLocation"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Date"-->
+<!--        android:textSize="18sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textViewParking"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/textViewDate"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="Parking Available"-->
+<!--        android:textSize="18sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textViewLength"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/textViewDate"-->
+<!--        android:layout_marginTop="61dp"-->
+<!--        android:text="Lenght of the hike"-->
+<!--        android:textSize="18sp" />-->
+
+    <!--    <Button-->
+<!--        android:id="@+id/viewDetailBtn"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="200dp"-->
+<!--        android:text="Delete"/>-->
+
+    <!-- Add other TextViews for length, difficulty, and any additional fields -->
+
+</LinearLayout>

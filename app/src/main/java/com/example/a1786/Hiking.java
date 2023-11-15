@@ -1,6 +1,8 @@
 package com.example.a1786;
 
-public class Hiking {
+import java.io.Serializable;
+
+public class Hiking implements Serializable {
     private int id;
     private String name;
     private String location;

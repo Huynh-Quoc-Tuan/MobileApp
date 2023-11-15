@@ -104,4 +104,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return hikes;
     }
+
+    @SuppressLint("Range")
+    public Hiking getHikeById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("hiking", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            Hiking hike = new Hiking();
+            hike.setName(cursor.getString(cursor.getColumnIndex("name")));
+            hike.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+            hike.setDate(cursor.getString(cursor.getColumnIndex("date")));
+            hike.setLength(cursor.getString(cursor.getColumnIndex("length")));
+            hike.setLevel(cursor.getString(cursor.getColumnIndex("level")));
+            hike.setParking(cursor.getString(cursor.getColumnIndex("parking")));
+
+            cursor.close();
+            db.close();
+            return hike;
+        }
+
+        if (cursor != null) {
+            cursor.close();
+        }
+        db.close();
+        return null;
+    }
 }
