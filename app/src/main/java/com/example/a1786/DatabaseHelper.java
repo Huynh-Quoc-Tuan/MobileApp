@@ -28,7 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "date TEXT," +
                 "length TEXT," +
                 "level TEXT," +
-                "parking TEXT" + ")";
+                "parking TEXT," +
+                "decription TEXT" + ")";
         db.execSQL(CREATE_TABLE_HIKING);
     }
 
@@ -95,6 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 hike.setLength(cursor.getString(cursor.getColumnIndex("length")));
                 hike.setLevel(cursor.getString(cursor.getColumnIndex("level")));
                 hike.setParking(cursor.getString(cursor.getColumnIndex("parking")));
+                hike.setDecription(cursor.getString(cursor.getColumnIndex("description")));
                 hikes.add(hike);
             } while (cursor.moveToNext());
         }
@@ -118,6 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             hike.setLength(cursor.getString(cursor.getColumnIndex("length")));
             hike.setLevel(cursor.getString(cursor.getColumnIndex("level")));
             hike.setParking(cursor.getString(cursor.getColumnIndex("parking")));
+            hike.setDecription(cursor.getString(cursor.getColumnIndex("description")));
 
             cursor.close();
             db.close();

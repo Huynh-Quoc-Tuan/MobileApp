@@ -36,7 +36,7 @@ public class ViewDetailHikeActivity extends AppCompatActivity {
                 tvName.setText(hike.getName());
                 tvLocation.setText(hike.getLocation());
                 tvDate.setText(hike.getDate());
-                tvDescription.setText(hike.getDiscrip());
+                tvDescription.setText(hike.getDecription());
                 tvLength.setText(hike.getLength());
             } else {
                 // Xử lý trường hợp không tìm thấy chuyến đi bộ với ID cụ thể

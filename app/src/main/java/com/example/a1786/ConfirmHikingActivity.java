@@ -76,7 +76,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                         newHike.setLength(lenght);
                         newHike.setLevel(level);
                         newHike.setParking(parking);
-                        newHike.setDiscrip(descrip);
+                        newHike.setDecription(descrip);
 
                         DatabaseHelper dbHelper = new DatabaseHelper(ConfirmHikingActivity.this); // context ở đây là Context từ Activity hoặc Fragment của bạn
                         boolean result = dbHelper.addHike(newHike);

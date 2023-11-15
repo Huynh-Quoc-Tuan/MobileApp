@@ -2,18 +2,36 @@ package com.example.a1786;
 
 import java.io.Serializable;
 
-public class Hiking implements Serializable {
+public class Hiking {
     private int id;
     private String name;
     private String location;
     private String date;
     private String length;
     private String level;
+    private String parking;
+    private String decription;
 
-    public Hiking() {
+    public Hiking(int id, String name, String location, String date, String length, String level, String parking, String decription) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.date = date;
+        this.length = length;
+        this.level = level;
+        this.parking = parking;
+        this.decription = decription;
     }
 
-    private String parking;
+    public Hiking() {
+        this.name = "";
+        this.location = "";
+        this.date = "";
+        this.length = "";
+        this.level = "";
+        this.parking = "";
+        this.decription = "";
+    }
 
     public int getId() {
         return id;
@@ -67,24 +85,11 @@ public class Hiking implements Serializable {
         this.parking = parking;
     }
 
-    public String getDiscrip() {
-        return discrip;
+    public String getDecription() {
+        return decription;
     }
 
-    public void setDiscrip(String discrip) {
-        this.discrip = discrip;
-    }
-
-    private String discrip;
-
-    public Hiking(int id, String name, String location, String date, String length, String level, String parking, String discrip) {
-        this.id = id;
-        this.name = name;
-        this.location = location;
-        this.date = date;
-        this.length = length;
-        this.level = level;
-        this.parking = parking;
-        this.discrip = discrip;
+    public void setDecription(String decription) {
+        this.decription = decription;
     }
 }
