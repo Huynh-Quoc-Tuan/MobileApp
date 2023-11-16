@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgr"
-    tools:context=".MainActivity">
+    android:background="@drawable/backgr">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CONFIRM HIKE"
+                android:text="CONFFIRM HIKING"
                 android:textColor="@color/my_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
@@ -171,7 +170,7 @@
                 android:id="@+id/parkingAvailable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">>
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/parkingAvailableYes"
@@ -194,11 +193,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.7"
-                android:text="Description"
+                android:text="Decription"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/descriptionTextView"
+                android:id="@+id/decriptionTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -230,7 +229,6 @@
                     android:text="Add"
                     app:cornerRadius="32dp" />
             </LinearLayout>
-
 
             <View
                 android:layout_width="wrap_content"

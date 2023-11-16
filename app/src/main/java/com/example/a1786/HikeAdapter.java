@@ -16,6 +16,8 @@ public class HikeAdapter extends ArrayAdapter<Hiking> {
 
     public HikeAdapter(Context context, List<Hiking> hikes) {
         super(context, 0, hikes);
+        this.context = context;
+        this.hikes = hikes;
     }
 
     @Override

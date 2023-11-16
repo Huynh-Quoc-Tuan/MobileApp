@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private Button viewBtn, submitBtn;
     private RadioGroup levelOfDiff, parkingAvailable;
     private RadioButton levelOfDiff1, levelOfDiff2, levelOfDiff3, parkingAvailableYes, parkingAvailableNo;
-    private EditText nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, description;
+    private EditText nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ShowHikesActivity.class);
+//                intent.putExtra("HikeID", 1);
                 startActivity(intent);
             }
         });
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 String name = nameOfTheHike.getText().toString();
                 String location = locationOfTheHike.getText().toString();
                 String dateofhike = dateOfTheHike.getText().toString();
-                String descrip = description.getText().toString();
+                String decrip = decription.getText().toString();
                 String lenght = lengthOfTheHike.getText().toString();
 
                 // Get infor from Radio Button
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("LOCATION",location);
                 bundle.putString("DATE", dateofhike);
                 bundle.putString("LENGTH", lenght);
-                bundle.putString("DESCRIP", descrip);
+                bundle.putString("DESCRIP", decrip);
                 bundle.putString("LEVEL", level);
                 bundle.putString("PARKING", parking);
                 intent.putExtras(bundle);
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         lengthOfTheHike = findViewById(R.id.lengthTheHike);
         locationOfTheHike = findViewById(R.id.location);
         dateOfTheHike = findViewById(R.id.dateOfTheHike);
-        description = findViewById(R.id.description);
+        decription = findViewById(R.id.decription);
         submitBtn = findViewById(R.id.submitBtn);
         viewBtn = findViewById(R.id.viewBtn);
 

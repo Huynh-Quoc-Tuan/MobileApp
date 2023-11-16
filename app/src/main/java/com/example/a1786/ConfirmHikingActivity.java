@@ -16,7 +16,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
     private Button viewHikesButton, addHikeButton;
     private RadioGroup levelOfDiff, parkingAvailable;
     private RadioButton levelOfDiff1, levelOfDiff2, levelOfDiff3, parkingAvailableYes, parkingAvailableNo;
-    private TextView nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, description;
+    private TextView nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription;
     private DatabaseHelper databaseHelper;
 
 
@@ -24,7 +24,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Set the content view to the activity_main layout
-        setContentView(R.layout.activity_view_detail_hike);
+        setContentView(R.layout.confirm_add_hike);
         databaseHelper = new DatabaseHelper(this);
 
         findById();
@@ -39,7 +39,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                 String location = bundle.getString("LOCATION");
                 String date = bundle.getString("DATE", "");
                 String lenght = bundle.getString("LENGTH", "");
-                String descrip = bundle.getString("DESCRIP", "");
+                String decrip = bundle.getString("DESCRIP", "");
                 String level = bundle.getString("LEVEL", "");
                 String parking = bundle.getString("PARKING", "");
 
@@ -49,7 +49,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                 locationOfTheHike.setText(location);
                 dateOfTheHike.setText(date);
                 lengthOfTheHike.setText(lenght);
-                description.setText(descrip);
+                decription.setText(decrip);
 
                 if ("Easy".equals(level)) {
                     levelOfDiff1.setChecked(true);
@@ -76,11 +76,12 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                         newHike.setLength(lenght);
                         newHike.setLevel(level);
                         newHike.setParking(parking);
-                        newHike.setDecription(descrip);
+                        newHike.setDescription(decrip);
 
                         DatabaseHelper dbHelper = new DatabaseHelper(ConfirmHikingActivity.this); // context ở đây là Context từ Activity hoặc Fragment của bạn
                         boolean result = dbHelper.addHike(newHike);
                         if(result) {
+
                             Toast.makeText(ConfirmHikingActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(ConfirmHikingActivity.this, ShowHikesActivity.class);
                             startActivity(intent);
@@ -99,7 +100,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
         lengthOfTheHike = findViewById(R.id.lengthTheHikeTextView);
         locationOfTheHike = findViewById(R.id.locationTextView);
         dateOfTheHike = findViewById(R.id.dateOfTheHikeTextView);
-        description = findViewById(R.id.descriptionTextView);
+        decription = findViewById(R.id.decriptionTextView);
         addHikeButton = findViewById(R.id.addHikeButton);
 
 

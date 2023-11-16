@@ -2,7 +2,7 @@ package com.example.a1786;
 
 import java.io.Serializable;
 
-public class Hiking {
+public class Hiking implements Serializable{
     private int id;
     private String name;
     private String location;
@@ -10,17 +10,16 @@ public class Hiking {
     private String length;
     private String level;
     private String parking;
-    private String decription;
+    private String description;
 
-    public Hiking(int id, String name, String location, String date, String length, String level, String parking, String decription) {
-        this.id = id;
+    public Hiking(String name, String location, String date, String length, String level, String parking, String description) {
         this.name = name;
         this.location = location;
         this.date = date;
         this.length = length;
         this.level = level;
         this.parking = parking;
-        this.decription = decription;
+        this.description = description;
     }
 
     public Hiking() {
@@ -30,12 +29,13 @@ public class Hiking {
         this.length = "";
         this.level = "";
         this.parking = "";
-        this.decription = "";
+        this.description = "";
     }
 
     public int getId() {
         return id;
     }
+
 
     public String getName() {
         return name;
@@ -85,11 +85,25 @@ public class Hiking {
         this.parking = parking;
     }
 
-    public String getDecription() {
-        return decription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDecription(String decription) {
-        this.decription = decription;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Hike{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", date='" + date + '\'' +
+                ", length='" + length + '\'' +
+                ", level='" + level + '\'' +
+                ", parking='" + parking + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

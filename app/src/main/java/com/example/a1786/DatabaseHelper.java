@@ -12,105 +12,169 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "hikingDatabase";
     private static final int DATABASE_VERSION = 1;
+
+    // Database Name
+    private static final String DATABASE_NAME = "HikeDatabase";
+
+    // Table name
+    private static final String TABLE_HIKES = "hikes";
+
+    // Hikes Table Columns names
+    private static final String KEY_ID = "id";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_LOCATION = "location";
+    private static final String KEY_DATE = "date";
+    private static final String KEY_LENGTH = "length";
+    private static final String KEY_LEVEL = "level";
+    private static final String KEY_PARKING = "parking";
+    private static final String KEY_DESCRIPTION = "description";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_TABLE_HIKING = "CREATE TABLE hiking (" +
-                "id INTEGER PRIMARY KEY," +
-                "name TEXT," +
-                "location TEXT," +
-                "date TEXT," +
-                "length TEXT," +
-                "level TEXT," +
-                "parking TEXT," +
-                "decription TEXT" + ")";
-        db.execSQL(CREATE_TABLE_HIKING);
+        String CREATE_HIKES_TABLE = "CREATE TABLE " + TABLE_HIKES + "("
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_NAME + " TEXT,"
+                + KEY_LOCATION + " TEXT," + KEY_DATE + " TEXT," + KEY_LENGTH + " TEXT,"
+                + KEY_LEVEL + " TEXT," + KEY_PARKING + " TEXT," + KEY_DESCRIPTION + " TEXT" + ")";
+        db.execSQL(CREATE_HIKES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS hiking");
+        // Drop older table if existed
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_HIKES);
+
+        // Create tables again
         onCreate(db);
     }
 
     public boolean addHike(Hiking hike) {
         SQLiteDatabase db = this.getWritableDatabase();
+
         ContentValues values = new ContentValues();
-        values.put("name", hike.getName());
-        values.put("location", hike.getLocation());
-        values.put("date", hike.getDate());
-        values.put("length", hike.getLength());
-        values.put("level", hike.getLevel());
-        values.put("parking", hike.getParking());
+        values.put(KEY_NAME, hike.getName());
+        values.put(KEY_LOCATION, hike.getLocation());
+        values.put(KEY_DATE, hike.getDate());
+        values.put(KEY_LENGTH, hike.getLength());
+        values.put(KEY_LEVEL, hike.getLevel());
+        values.put(KEY_PARKING, hike.getParking());
+        values.put(KEY_DESCRIPTION, hike.getDescription());
 
-        long result = db.insert("hiking", null, values);
-        db.close();
-        return result != -1;
+        // Inserting Row
+        db.insert(TABLE_HIKES, null, values);
+        db.close(); // Closing database connection
+
+        return true;
     }
 
-    public boolean updateHike(Hiking hike) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name", hike.getName());
-        values.put("location", hike.getLocation());
-        values.put("date", hike.getDate());
-        values.put("length", hike.getLength());
-        values.put("level", hike.getLevel());
-        values.put("parking", hike.getParking());
-
-        int result = db.update("hiking", values, "id = ?", new String[]{String.valueOf(hike.getId())});
-        db.close();
-        return result > 0;
-    }
-
-    public boolean deleteHike(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete("hiking", "id = ?", new String[]{String.valueOf(id)});
-        db.close();
-        return result > 0;
-    }
-
-    public Cursor getAllHikesCursor() {
+    public Hiking getHike(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM hiking", null);
+
+        Cursor cursor = db.query(TABLE_HIKES, new String[] { KEY_ID, KEY_NAME, KEY_LOCATION, KEY_DATE, KEY_LENGTH, KEY_LEVEL, KEY_PARKING, KEY_DESCRIPTION }, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Hiking hike = new Hiking(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
+
+        return hike;
+    }
+    public int updateHike(Hiking hike) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, hike.getName());
+        values.put(KEY_LOCATION, hike.getLocation());
+        values.put(KEY_DATE, hike.getDate());
+        values.put(KEY_LENGTH, hike.getLength());
+        values.put(KEY_LEVEL, hike.getLevel());
+        values.put(KEY_PARKING, hike.getParking());
+        values.put(KEY_DESCRIPTION, hike.getDescription());
+
+        // updating row
+        return db.update(TABLE_HIKES, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(hike.getId()) });
     }
 
-    @SuppressLint("Range")
+    public void deleteHike(Hiking hike) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_HIKES, KEY_ID + " = ?",
+                new String[] { String.valueOf(hike.getId()) });
+        db.close();
+    }
+
     public List<Hiking> getAllHikes() {
-        List<Hiking> hikes = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM hiking", null,null);
+        List<Hiking> hikeList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_HIKES;
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
                 Hiking hike = new Hiking();
-                hike.setName(cursor.getString(cursor.getColumnIndex("name")));
-                hike.setLocation(cursor.getString(cursor.getColumnIndex("location")));
-                hike.setDate(cursor.getString(cursor.getColumnIndex("date")));
-                hike.setLength(cursor.getString(cursor.getColumnIndex("length")));
-                hike.setLevel(cursor.getString(cursor.getColumnIndex("level")));
-                hike.setParking(cursor.getString(cursor.getColumnIndex("parking")));
-                hike.setDecription(cursor.getString(cursor.getColumnIndex("description")));
-                hikes.add(hike);
+                hike.setName(cursor.getString(1));
+                hike.setLocation(cursor.getString(2));
+                hike.setDate(cursor.getString(3));
+                hike.setLength(cursor.getString(4));
+                hike.setLevel(cursor.getString(5));
+                hike.setParking(cursor.getString(6));
+                hike.setDescription(cursor.getString(7));
+
+                // Adding hike to list
+                hikeList.add(hike);
             } while (cursor.moveToNext());
         }
 
-        cursor.close();
-        db.close();
-
-        return hikes;
+        // return hike list
+        return hikeList;
     }
 
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+
+
+//    @SuppressLint("Range")
+//    public List<Hiking> getAllHikes() {
+//        List<Hiking> hikes = new ArrayList<>();
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor cursor = db.rawQuery("SELECT * FROM hike", null,null);
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                Hiking hike = new Hiking();
+//                hike.setName(cursor.getString(cursor.getColumnIndex("name")));
+//                hike.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+//                hike.setDate(cursor.getString(cursor.getColumnIndex("date")));
+//                hike.setLength(cursor.getString(cursor.getColumnIndex("length")));
+//                hike.setLevel(cursor.getString(cursor.getColumnIndex("level")));
+//                hike.setParking(cursor.getString(cursor.getColumnIndex("parking")));
+//                hike.setDescription(cursor.getString(cursor.getColumnIndex("decription")));
+//                hikes.add(hike);
+//            } while (cursor.moveToNext());
+//        }
+//
+//        cursor.close();
+//        db.close();
+//
+//        return hikes;
+//    }
+//
     @SuppressLint("Range")
     public Hiking getHikeById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("hiking", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
+        Cursor cursor = db.query("hike", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             Hiking hike = new Hiking();
@@ -120,7 +184,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             hike.setLength(cursor.getString(cursor.getColumnIndex("length")));
             hike.setLevel(cursor.getString(cursor.getColumnIndex("level")));
             hike.setParking(cursor.getString(cursor.getColumnIndex("parking")));
-            hike.setDecription(cursor.getString(cursor.getColumnIndex("description")));
+            hike.setDescription(cursor.getString(cursor.getColumnIndex("description")));
 
             cursor.close();
             db.close();
