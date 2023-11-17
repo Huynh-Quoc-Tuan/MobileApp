@@ -22,19 +22,20 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="748dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="40dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DETAIL OF THE HIKE"
+                android:text="UPDATE HIKING"
                 android:textColor="@color/my_primary"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/sloganTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.7"
@@ -51,11 +52,11 @@
                 android:text="Name of the hike"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/nameOfTheHikeTextView"
+            <EditText
+                android:id="@+id/nameOfTheHike"
                 android:layout_width="match_parent"
-                android:textSize="20sp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
 
             <View
                 android:layout_width="wrap_content"
@@ -68,11 +69,12 @@
                 android:text="Locaiton"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/locationTextView"
+            <EditText
+                android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"/>
+                android:drawableEnd="@drawable/baseline_add_location_24"
+                android:inputType="textEmailAddress" />
 
             <View
                 android:layout_width="wrap_content"
@@ -85,11 +87,11 @@
                 android:text="Date of the hike"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/dateOfTheHikeTextView"
+            <EditText
+                android:id="@+id/dateOfTheHike"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:drawableEnd="@drawable/baseline_calendar_month_24"
                 android:inputType="textEmailAddress" />
 
             <View
@@ -103,11 +105,10 @@
                 android:text="Lenght the hike"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/lengthTheHikeTextView"
+            <EditText
+                android:id="@+id/lengthTheHike"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
                 android:inputType="textEmailAddress" />
 
             <View
@@ -123,7 +124,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <RadioGroup
@@ -170,7 +171,7 @@
                 android:id="@+id/parkingAvailable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal">>
 
                 <RadioButton
                     android:id="@+id/parkingAvailableYes"
@@ -193,30 +194,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.7"
-                android:text="Decription"
+                android:text="Description"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/decriptionTextView"
+            <EditText
+                android:id="@+id/decription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
                 android:inputType="textEmailAddress" />
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="50dp" />
+                android:layout_height="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="end">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/editHikeBtn"
+                <Button
+                    android:id="@+id/viewBtn"
                     android:layout_width="120dp"
                     android:layout_height="60dp"
-                    android:text="Edit"
+                    android:text="View"
                     app:cornerRadius="32dp" />
 
                 <View
@@ -224,10 +224,10 @@
                     android:layout_height="10dp" />
 
                 <Button
-                    android:id="@+id/removeHikeBtn"
+                    android:id="@+id/submitBtn"
                     android:layout_width="120dp"
                     android:layout_height="60dp"
-                    android:text="Remove"
+                    android:text="Submit"
                     app:cornerRadius="32dp" />
             </LinearLayout>
 

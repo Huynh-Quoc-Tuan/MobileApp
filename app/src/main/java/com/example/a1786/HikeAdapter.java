@@ -42,6 +42,8 @@ public class HikeAdapter extends ArrayAdapter<Hiking> {
         }
 
         Hiking hike = getItem(position);
+        int id = hike.getId();
+
         // Cập nhật dữ liệu vào convertView dựa trên đối tượng hike
         TextView tvName = convertView.findViewById(R.id.textViewName);
         TextView tvLocation = convertView.findViewById(R.id.textViewLocation);
@@ -49,7 +51,7 @@ public class HikeAdapter extends ArrayAdapter<Hiking> {
         TextView tvParking = convertView.findViewById(R.id.textViewParking);
         TextView tvLength = convertView.findViewById(R.id.textViewLength);
 
-        tvName.setText(hike.getName());
+        tvName.setText(hike.getName()); // Đặt giá trị Id của hike
         tvLocation.setText(hike.getLocation());
         tvDate.setText(hike.getDate());
         tvParking.setText(hike.getParking());

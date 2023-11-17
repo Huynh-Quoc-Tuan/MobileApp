@@ -3,9 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:alpha="1"-->
+<!--        android:textSize="20dp"-->
+<!--        android:gravity="center"-->
+<!--        android:text="LIST OF THE HIKE"-->
+<!--        android:textStyle="bold" />-->
+
+    <android.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Searching of hike"/>
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_marginTop="35dp"
+        android:dividerHeight="5dp"/>
 
 </RelativeLayout>

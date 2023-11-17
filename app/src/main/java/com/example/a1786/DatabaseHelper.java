@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -81,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Hiking hike = new Hiking(cursor.getString(1), cursor.getString(2), cursor.getString(3),
+        Hiking hike = new Hiking(cursor.getInt(0),cursor.getString(1), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7));
 
         return hike;
@@ -103,11 +104,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[] { String.valueOf(hike.getId()) });
     }
 
-    public void deleteHike(Hiking hike) {
+    public void deleteAllHike(Hiking hike) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_HIKES, KEY_ID + " = ?",
                 new String[] { String.valueOf(hike.getId()) });
         db.close();
+    }
+
+    public boolean deleteHikeById(int hikeId) {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            int rowsAffected = db.delete("hikes", "id = ?", new String[]{String.valueOf(hikeId)});
+            db.close();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public List<Hiking> getAllHikes() {
@@ -122,6 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Hiking hike = new Hiking();
+                hike.setId(cursor.getInt(0));
                 hike.setName(cursor.getString(1));
                 hike.setLocation(cursor.getString(2));
                 hike.setDate(cursor.getString(3));
@@ -139,38 +153,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return hikeList;
     }
 
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////////
-
-
-//    @SuppressLint("Range")
-//    public List<Hiking> getAllHikes() {
-//        List<Hiking> hikes = new ArrayList<>();
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.rawQuery("SELECT * FROM hike", null,null);
-//
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Hiking hike = new Hiking();
-//                hike.setName(cursor.getString(cursor.getColumnIndex("name")));
-//                hike.setLocation(cursor.getString(cursor.getColumnIndex("location")));
-//                hike.setDate(cursor.getString(cursor.getColumnIndex("date")));
-//                hike.setLength(cursor.getString(cursor.getColumnIndex("length")));
-//                hike.setLevel(cursor.getString(cursor.getColumnIndex("level")));
-//                hike.setParking(cursor.getString(cursor.getColumnIndex("parking")));
-//                hike.setDescription(cursor.getString(cursor.getColumnIndex("decription")));
-//                hikes.add(hike);
-//            } while (cursor.moveToNext());
-//        }
-//
-//        cursor.close();
-//        db.close();
-//
-//        return hikes;
-//    }
-//
     @SuppressLint("Range")
     public Hiking getHikeById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ShowHikesActivity.class);
-//                intent.putExtra("HikeID", 1);
+//                intent.putExtra("HikeID", 3);
                 startActivity(intent);
             }
         });

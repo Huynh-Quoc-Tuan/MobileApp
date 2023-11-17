@@ -12,7 +12,8 @@ public class Hiking implements Serializable{
     private String parking;
     private String description;
 
-    public Hiking(String name, String location, String date, String length, String level, String parking, String description) {
+    public Hiking(int id, String name, String location, String date, String length, String level, String parking, String description) {
+        this.id = id;
         this.name = name;
         this.location = location;
         this.date = date;
@@ -36,6 +37,9 @@ public class Hiking implements Serializable{
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
