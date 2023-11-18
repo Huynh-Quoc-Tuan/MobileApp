@@ -213,8 +213,19 @@
                 android:gravity="end">
 
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/backBtn"
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
+                    android:text="Back"
+                    app:cornerRadius="32dp" />
+
+                <View
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/editHikeBtn"
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:text="Edit"
                     app:cornerRadius="32dp" />
@@ -223,9 +234,9 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp" />
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/removeHikeBtn"
-                    android:layout_width="120dp"
+                    android:layout_width="100dp"
                     android:layout_height="60dp"
                     android:text="Remove"
                     app:cornerRadius="32dp" />

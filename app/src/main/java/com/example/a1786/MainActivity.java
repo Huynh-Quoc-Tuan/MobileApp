@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         levelOfDiff1= findViewById(R.id.levelOfDiff1);
         levelOfDiff2 = findViewById(R.id.levelOfDiff2);
         levelOfDiff3 = findViewById(R.id.levelOfDiff3);
-
     }
 }
 

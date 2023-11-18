@@ -70,6 +70,13 @@ public class ShowHikesActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+
     private void filterHikes(String query) {
         filteredHikes.clear();
         for (Hiking hike : hikeList) {
