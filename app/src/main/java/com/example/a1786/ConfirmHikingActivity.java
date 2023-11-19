@@ -31,10 +31,10 @@ public class ConfirmHikingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (intent != null) {
-            // Lấy Bundle từ Intent
+            // Get Bundle from Intent
             if (bundle != null) {
 
-                // Lấy thông tin từ Bundle
+                // Retrieve information from Bundle
                 String name = bundle.getString("NAME");
                 String location = bundle.getString("LOCATION");
                 String date = bundle.getString("DATE", "");
@@ -44,7 +44,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                 String parking = bundle.getString("PARKING", "");
 
 
-                // Showw infor
+                // Show infor
                 nameOfTheHike.setText(name);
                 locationOfTheHike.setText(location);
                 dateOfTheHike.setText(date);
@@ -78,7 +78,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                         newHike.setParking(parking);
                         newHike.setDescription(decrip);
 
-                        DatabaseHelper dbHelper = new DatabaseHelper(ConfirmHikingActivity.this); // context ở đây là Context từ Activity hoặc Fragment của bạn
+                        DatabaseHelper dbHelper = new DatabaseHelper(ConfirmHikingActivity.this); // The context here is the Context from your Activity or Fragment
                         boolean result = dbHelper.addHike(newHike);
                         if(result) {
 
@@ -87,7 +87,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                         else
-                            Toast.makeText(ConfirmHikingActivity.this,"THAT BAI ROI MINH OI =(((",Toast.LENGTH_LONG).show();
+                            Toast.makeText(ConfirmHikingActivity.this,"FAILED, MY DEAR =(((",Toast.LENGTH_LONG).show();
                         dbHelper.close();
                     }
                 });

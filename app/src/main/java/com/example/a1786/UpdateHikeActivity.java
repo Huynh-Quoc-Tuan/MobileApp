@@ -54,7 +54,7 @@ public class UpdateHikeActivity extends AppCompatActivity {
                     parking = selectedParkingRadioButton.getText().toString();
                 }
 
-                // Gọi phương thức cập nhật trong cơ sở dữ liệu
+                // Call the update method in the database
                 Boolean updateSuccess  = databaseHelper.updateHike(hikeId, name, location, date, length, level, parking, description);
 
                 if (updateSuccess) {
@@ -85,14 +85,14 @@ public class UpdateHikeActivity extends AppCompatActivity {
 
     private void viewDetailHike() {
         int hikeId = hikeid();
-        // Kiểm tra xem ID có hợp lệ hay không
+        // Check if the ID is valid or not
         if (hikeId != -1) {
-            // Sử dụng ID để truy vấn cơ sở dữ liệu và lấy thông tin chi tiết của chuyến đi bộ
+            // Use the ID to query the database and retrieve detailed information of the hike
             DatabaseHelper databaseHelper = new DatabaseHelper(this);
-            Hiking hike = databaseHelper.getHike(hikeId); // Thay thế bằng phương thức truy vấn thực tế
+            Hiking hike = databaseHelper.getHike(hikeId); // Replace with the actual query method
 
             if (hike != null) {
-                // Hiển thị thông tin chi tiết trong layout của DetailActivity
+                // Display detailed information in the layout of DetailActivity
                 nameOfTheHike = findViewById(R.id.nameOfTheHike);
                 lengthOfTheHike = findViewById(R.id.lengthTheHike);
                 locationOfTheHike = findViewById(R.id.location);
@@ -125,14 +125,14 @@ public class UpdateHikeActivity extends AppCompatActivity {
                     btnNo.setChecked(true);
                 }
             } else {
-                // Xử lý trường hợp không tìm thấy chuyến đi bộ với ID cụ thể
-                Toast.makeText(this, "Chuyến đi bộ không tồn tại", Toast.LENGTH_SHORT).show();
+                // Handle the case when no hike is found with the specific ID
+                Toast.makeText(this, "Hike does not exist", Toast.LENGTH_SHORT).show();
                 Intent hikeInfoIntent = new Intent(this, MainActivity.class);
                 startActivity(hikeInfoIntent);
             }
         } else {
-            // Xử lý trường hợp không nhận được ID từ Intent
-            Toast.makeText(this, "Không có ID được truyền", Toast.LENGTH_SHORT).show();
+            // Handle the case when ID is not received from Intent
+            Toast.makeText(this, "No ID is passed", Toast.LENGTH_SHORT).show();
             Intent hikeInfoIntent = new Intent(this, MainActivity.class);
             startActivity(hikeInfoIntent);
         }

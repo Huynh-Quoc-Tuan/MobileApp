@@ -22,7 +22,7 @@ public class ViewDetailHikeActivity extends Activity {
     private Button removeBtn, editBtn, backBtn;
     private HikeAdapter adapter;
     private List<Hiking> hikeList;
-    static final int UPDATE_HIKE_REQUEST = 1;  // Mã yêu cầu để xác định kết quả
+    static final int UPDATE_HIKE_REQUEST = 1;  // Request code to identify the result
     private Handler handler = new Handler(Looper.getMainLooper());
 
 
@@ -33,7 +33,7 @@ public class ViewDetailHikeActivity extends Activity {
 
         if (requestCode == UPDATE_HIKE_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
-                // Cập nhật thành công, cập nhật thông tin trang trước đó
+                // Update successful, update the information of the previous page
                 viewDetailHike();
             }
         }
@@ -53,16 +53,16 @@ public class ViewDetailHikeActivity extends Activity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewDetailHikeActivity.this);
-                builder.setMessage("Bạn có chắc chắn muốn xóa hike này?")
-                        .setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                builder.setMessage("Are you sure you want to delete this hike?")
+                        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // Xác nhận xóa, tiến hành xóa selectedHike
+                                // Confirm deletion, proceed to delete selectedHike
                                 deleteHike();
                             }
                         })
-                        .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // Người dùng đã hủy xóa, không thực hiện thao tác nào
+                                // User canceled deletion, no action is taken
                             }
                         });
                 AlertDialog alertDialog = builder.create();
@@ -75,7 +75,7 @@ public class ViewDetailHikeActivity extends Activity {
             public void onClick(View v) {
                 int hikeId = hikeid();
 
-                // Chuyển đến hoạt động sửa đổi Hike và gửi thông tin Hike qua Intent
+                // Navigate to the Edit Hike activity and send Hike information via Intent
                 Intent intent = new Intent(ViewDetailHikeActivity.this, UpdateHikeActivity.class);
                 intent.putExtra("selected_hike", hikeId);
                 startActivityForResult(intent,UPDATE_HIKE_REQUEST);
@@ -93,10 +93,10 @@ public class ViewDetailHikeActivity extends Activity {
     }
 
 //    private void updateHikeList() {
-//        // Đặt logic cập nhật danh sách Hike ở đây
+//        // Place the logic for updating the Hike list here
 //        // ...
 //
-//        // Sau khi cập nhật, sử dụng Handler để thông báo về thay đổi trên luồng UI chính
+//        // After the update, use a Handler to notify about the changes on the main UI thread
 //        handler.post(new Runnable() {
 //            @Override
 //            public void run() {
@@ -109,18 +109,18 @@ public class ViewDetailHikeActivity extends Activity {
         Intent intent = getIntent();
         int hikeId = intent.getIntExtra("HikeID", -1);
         if (hikeId != -1) {
-            // Xóa selectedHike khỏi cơ sở dữ liệu bằng Id
+            // Delete selectedHike from the database by Id
             DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext());
             boolean isDeleted = dbHelper.deleteHikeById(hikeId);
             dbHelper.close();
 
             if (isDeleted) {
                 adapter.notifyDataSetChanged();
-                // Quay trở lại MainActivity
-                onBackPressed(); // Hoặc có thể sử dụng Intent để chuyển trang
+                // Go back to MainActivity
+                onBackPressed(); // Or use Intent to navigate to another page
             } else {
-                // Xóa không thành công, xử lý lỗi
-                Toast.makeText(this, "Không thể xóa hike.", Toast.LENGTH_SHORT).show();
+                // Deletion unsuccessful, handle error
+                Toast.makeText(this, "Unable to delete hike.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -133,14 +133,14 @@ public class ViewDetailHikeActivity extends Activity {
 
     private void viewDetailHike() {
         int hikeId = hikeid();
-        // Kiểm tra xem ID có hợp lệ hay không
+        // Check if the ID is valid or not
         if (hikeId != -1) {
-            // Sử dụng ID để truy vấn cơ sở dữ liệu và lấy thông tin chi tiết của chuyến đi bộ
+            // Use the ID to query the database and retrieve detailed information of the hike
             DatabaseHelper databaseHelper = new DatabaseHelper(this);
-            Hiking hike = databaseHelper.getHike(hikeId); // Thay thế bằng phương thức truy vấn thực tế
+            Hiking hike = databaseHelper.getHike(hikeId); // Replace with the actual query method
 
             if (hike != null) {
-                // Hiển thị thông tin chi tiết trong layout của DetailActivity
+                // Display detailed information in the layout of DetailActivity
                 TextView tvName = findViewById(R.id.nameOfTheHikeTextView);
                 TextView tvLocation = findViewById(R.id.locationTextView);
                 TextView tvDate = findViewById(R.id.dateOfTheHikeTextView);
@@ -172,14 +172,14 @@ public class ViewDetailHikeActivity extends Activity {
                     btnNo.setChecked(true);
                 }
             } else {
-                // Xử lý trường hợp không tìm thấy chuyến đi bộ với ID cụ thể
-                Toast.makeText(this, "Chuyến đi bộ không tồn tại", Toast.LENGTH_SHORT).show();
+                // Handle the case when no hike is found with the specific ID
+                Toast.makeText(this, "Hike does not exist", Toast.LENGTH_SHORT).show();
                 Intent hikeInfoIntent = new Intent(this, MainActivity.class);
                 startActivity(hikeInfoIntent);
             }
         } else {
-            // Xử lý trường hợp không nhận được ID từ Intent
-            Toast.makeText(this, "Không có ID được truyền", Toast.LENGTH_SHORT).show();
+            // Handle the case when ID is not received from Intent
+            Toast.makeText(this, "No ID is passed", Toast.LENGTH_SHORT).show();
             Intent hikeInfoIntent = new Intent(this, MainActivity.class);
             startActivity(hikeInfoIntent);
         }

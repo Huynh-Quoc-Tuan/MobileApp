@@ -43,10 +43,10 @@ public class ShowHikesActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Lấy ID của Hike được chọn
+                // Get the ID of the selected Hike
                 int selectedHikeId = hikeList.get(position).getId();
 
-                // Chuyển sang màn hình chi tiết của Hike và truyền ID
+                // Switch to the detail screen of the Hike and pass the ID
                 Intent intent = new Intent(ShowHikesActivity.this, ViewDetailHikeActivity.class);
                 intent.putExtra("HikeID", selectedHikeId);
                 startActivity(intent);
@@ -57,13 +57,13 @@ public class ShowHikesActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Xử lý khi người dùng ấn nút tìm kiếm (nếu cần)
+                // Handle when the user clicks the search button (if necessary)
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                // Xử lý khi người dùng thay đổi nội dung tìm kiếm
+                // Handle when the user changes the search content
                 filterHikes(newText);
                 return false;
             }
