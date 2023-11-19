@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -17,9 +19,26 @@ import java.util.List;
 
 public class ViewDetailHikeActivity extends Activity {
     private TextView nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription;
-    private Button removeBtn, editBtn;
+    private Button removeBtn, editBtn, backBtn;
     private HikeAdapter adapter;
     private List<Hiking> hikeList;
+    static final int UPDATE_HIKE_REQUEST = 1;  // Mã yêu cầu để xác định kết quả
+    private Handler handler = new Handler(Looper.getMainLooper());
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == UPDATE_HIKE_REQUEST) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Cập nhật thành công, cập nhật thông tin trang trước đó
+                viewDetailHike();
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +48,7 @@ public class ViewDetailHikeActivity extends Activity {
 
         removeBtn = findViewById(R.id.removeHikeBtn);
         editBtn = findViewById(R.id.editHikeBtn);
+        backBtn = findViewById(R.id.backBtn);
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,6 +79,17 @@ public class ViewDetailHikeActivity extends Activity {
                 Intent intent = new Intent(ViewDetailHikeActivity.this, UpdateHikeActivity.class);
                 intent.putExtra("hikeId", hikeId);
                 startActivity(intent);
+                intent.putExtra("selected_hike", hikeId);
+                startActivityForResult(intent,UPDATE_HIKE_REQUEST);
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                updateHikeList();
+                adapter.notifyDataSetChanged();
+                onBackPressed();
             }
         });
     }
@@ -68,6 +99,18 @@ public class ViewDetailHikeActivity extends Activity {
         hikeList = dbHelper.getAllHikes();
 
 
+    }
+    private void updateHikeList() {
+        // Đặt logic cập nhật danh sách Hike ở đây
+        // ...
+
+        // Sau khi cập nhật, sử dụng Handler để thông báo về thay đổi trên luồng UI chính
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     private void deleteHike() {
@@ -117,7 +160,7 @@ public class ViewDetailHikeActivity extends Activity {
                 RadioButton btnYes = findViewById(R.id.parkingAvailableYes);
                 RadioButton btnNo = findViewById(R.id.parkingAvailableNo);
 
-                tvName.setText(String.valueOf(hike.getId()));
+                tvName.setText(hike.getName());
                 tvLocation.setText(hike.getLocation());
                 tvDate.setText(hike.getDate());
                 tvDecription.setText(hike.getDescription());

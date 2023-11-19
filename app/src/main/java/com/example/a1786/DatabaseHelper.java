@@ -87,21 +87,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return hike;
     }
-    public int updateHike(Hiking hike) {
+    public boolean updateHike(int hikeId, String name, String location, String date,
+                          String length, String level, String parking, String description) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, hike.getName());
-        values.put(KEY_LOCATION, hike.getLocation());
-        values.put(KEY_DATE, hike.getDate());
-        values.put(KEY_LENGTH, hike.getLength());
-        values.put(KEY_LEVEL, hike.getLevel());
-        values.put(KEY_PARKING, hike.getParking());
-        values.put(KEY_DESCRIPTION, hike.getDescription());
+        values.put(KEY_NAME, name);
+        values.put(KEY_LOCATION, location);
+        values.put(KEY_DATE, date);
+        values.put(KEY_LENGTH, length);
+        values.put(KEY_LEVEL, level);
+        values.put(KEY_PARKING, parking);
+        values.put(KEY_DESCRIPTION, description);
 
-        // updating row
-        return db.update(TABLE_HIKES, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(hike.getId()) });
+        int rowsAffected = db.update(TABLE_HIKES, values, KEY_ID + " = ?", new String[]{String.valueOf(hikeId)});
+
+        db.close();
+
+        // Trả về true nếu có ít nhất một dòng được cập nhật, ngược lại trả về false
+        return rowsAffected > 0;
     }
 
     public void deleteAllHike(Hiking hike) {

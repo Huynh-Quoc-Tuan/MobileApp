@@ -1,32 +1,90 @@
 package com.example.a1786;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class UpdateHikeActivity extends AppCompatActivity {
-    private Button viewHikesButton, addHikeButton;
+    private Button backBtn, updateBtn;
     private RadioGroup levelOfDiff, parkingAvailable;
     private RadioButton levelOfDiff1, levelOfDiff2, levelOfDiff3, parkingAvailableYes, parkingAvailableNo;
-    private TextView nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription;
-    private DatabaseHelper databaseHelper;
+    private EditText nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set the content view to the activity_main layout
         setContentView(R.layout.activity_update_hike);
-        databaseHelper = new DatabaseHelper(this);
 
         findById();
+        viewDetailHike();
 
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHelper databaseHelper = new DatabaseHelper(UpdateHikeActivity.this);
+                parkingAvailable = findViewById(R.id.parkingAvailable);
+                levelOfDiff = findViewById(R.id.levelOfDiff);
+
+                int hikeId = hikeid();
+                String name = nameOfTheHike.getText().toString();
+                String location = locationOfTheHike.getText().toString();
+                String date = dateOfTheHike.getText().toString();
+                String length = lengthOfTheHike.getText().toString();
+                String description = decription.getText().toString();
+
+
+
+                String level = "", parking = "";
+                int selectedLevelRadioId = levelOfDiff.getCheckedRadioButtonId();
+                int selectedParkingRadioId = parkingAvailable.getCheckedRadioButtonId();
+
+                if (selectedLevelRadioId != -1 && selectedParkingRadioId != -1) {
+                    RadioButton selectedLevelRadioButton = findViewById(selectedLevelRadioId);
+                    RadioButton selectedParkingRadioButton = findViewById(selectedParkingRadioId);
+                    level = selectedLevelRadioButton.getText().toString();
+                    parking = selectedParkingRadioButton.getText().toString();
+                }
+
+                // Gọi phương thức cập nhật trong cơ sở dữ liệu
+                Boolean updateSuccess  = databaseHelper.updateHike(hikeId, name, location, date, length, level, parking, description);
+
+                if (updateSuccess) {
+                    Toast.makeText(UpdateHikeActivity.this, "Data Updated", Toast.LENGTH_LONG).show();
+                    Intent resultIntent = new Intent();
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    onBackPressed();
+                    finish();
+                } else {
+                    Toast.makeText(UpdateHikeActivity.this, "Data CAN NOT UPDATE", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+
+    private int hikeid(){
         Intent intent = getIntent();
-        int hikeId = intent.getIntExtra("selected_hike", -1); // -1 là giá trị mặc định nếu không tìm thấy ID
+        int hikeId = intent.getIntExtra("selected_hike", -1);
+        return hikeId;
+    }
+
+    private void viewDetailHike() {
+        int hikeId = hikeid();
         // Kiểm tra xem ID có hợp lệ hay không
         if (hikeId != -1) {
             // Sử dụng ID để truy vấn cơ sở dữ liệu và lấy thông tin chi tiết của chuyến đi bộ
@@ -35,22 +93,23 @@ public class UpdateHikeActivity extends AppCompatActivity {
 
             if (hike != null) {
                 // Hiển thị thông tin chi tiết trong layout của DetailActivity
-                TextView tvName = findViewById(R.id.nameOfTheHikeTextView);
-                TextView tvLocation = findViewById(R.id.locationTextView);
-                TextView tvDate = findViewById(R.id.dateOfTheHikeTextView);
-                TextView tvDecription = findViewById(R.id.decriptionTextView);
-                TextView tvLength = findViewById(R.id.lengthTheHikeTextView);
+                nameOfTheHike = findViewById(R.id.nameOfTheHike);
+                lengthOfTheHike = findViewById(R.id.lengthTheHike);
+                locationOfTheHike = findViewById(R.id.location);
+                dateOfTheHike = findViewById(R.id.dateOfTheHike);
+                decription = findViewById(R.id.decription);
+
                 RadioButton btnEasy = findViewById(R.id.levelOfDiff1);
                 RadioButton btnNormal = findViewById(R.id.levelOfDiff2);
                 RadioButton btnHard = findViewById(R.id.levelOfDiff3);
                 RadioButton btnYes = findViewById(R.id.parkingAvailableYes);
                 RadioButton btnNo = findViewById(R.id.parkingAvailableNo);
 
-                tvName.setText(String.valueOf(hike.getId()));
-                tvLocation.setText(hike.getLocation());
-                tvDate.setText(hike.getDate());
-                tvDecription.setText(hike.getDescription());
-                tvLength.setText(hike.getLength());
+                nameOfTheHike.setText(hike.getName());
+                locationOfTheHike.setText(hike.getLocation());
+                dateOfTheHike.setText(hike.getDate());
+                decription.setText(hike.getDescription());
+                lengthOfTheHike.setText(hike.getLength());
 
                 if ("Easy".equals(hike.getLevel())) {
                     btnEasy.setChecked(true);
@@ -65,25 +124,22 @@ public class UpdateHikeActivity extends AppCompatActivity {
                 } else if ("No".equals(hike.getParking())) {
                     btnNo.setChecked(true);
                 }
+            } else {
+                // Xử lý trường hợp không tìm thấy chuyến đi bộ với ID cụ thể
+                Toast.makeText(this, "Chuyến đi bộ không tồn tại", Toast.LENGTH_SHORT).show();
+                Intent hikeInfoIntent = new Intent(this, MainActivity.class);
+                startActivity(hikeInfoIntent);
             }
+        } else {
+            // Xử lý trường hợp không nhận được ID từ Intent
+            Toast.makeText(this, "Không có ID được truyền", Toast.LENGTH_SHORT).show();
+            Intent hikeInfoIntent = new Intent(this, MainActivity.class);
+            startActivity(hikeInfoIntent);
         }
     }
 
     private void findById() {
-        nameOfTheHike = findViewById(R.id.nameOfTheHikeTextView);
-        lengthOfTheHike = findViewById(R.id.lengthTheHikeTextView);
-        locationOfTheHike = findViewById(R.id.locationTextView);
-        dateOfTheHike = findViewById(R.id.dateOfTheHikeTextView);
-        decription = findViewById(R.id.decriptionTextView);
-        addHikeButton = findViewById(R.id.addHikeButton);
-
-        parkingAvailable = findViewById(R.id.parkingAvailable);
-        parkingAvailableYes = findViewById(R.id.parkingAvailableYes);
-        parkingAvailableNo = findViewById(R.id.parkingAvailableNo);
-
-        levelOfDiff = findViewById(R.id.levelOfDiff);
-        levelOfDiff1= findViewById(R.id.levelOfDiff1);
-        levelOfDiff2 = findViewById(R.id.levelOfDiff2);
-        levelOfDiff3 = findViewById(R.id.levelOfDiff3);
+        updateBtn = findViewById(R.id.updateBtn);
+        backBtn = findViewById(R.id.backBtn);
     }
 }

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgr">
+    android:background="@drawable/backgr"
+    tools:context=".UpdateHikeActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -213,10 +214,10 @@
                 android:gravity="end">
 
                 <Button
-                    android:id="@+id/viewBtn"
+                    android:id="@+id/backBtn"
                     android:layout_width="120dp"
                     android:layout_height="60dp"
-                    android:text="View"
+                    android:text="Back"
                     app:cornerRadius="32dp" />
 
                 <View
@@ -224,10 +225,10 @@
                     android:layout_height="10dp" />
 
                 <Button
-                    android:id="@+id/submitBtn"
+                    android:id="@+id/updateBtn"
                     android:layout_width="120dp"
                     android:layout_height="60dp"
-                    android:text="Submit"
+                    android:text="Update"
                     app:cornerRadius="32dp" />
             </LinearLayout>
 
