@@ -50,17 +50,17 @@ public class ViewDetailHikeActivity extends Activity {
             }
         });
 
-//        editBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int hikeId = hikeid();
-//
-//                // Chuyển đến hoạt động sửa đổi Hike và gửi thông tin Hike qua Intent
-//                Intent intent = new Intent(ViewDetailHikeActivity.this, UpdateHikeActivity.class);
-//                intent.putExtra("selected_hike", hikeId);
-//                startActivity(intent);
-//            }
-//        });
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hikeId = hikeid();
+
+                // Chuyển đến hoạt động sửa đổi Hike và gửi thông tin Hike qua Intent
+                Intent intent = new Intent(ViewDetailHikeActivity.this, UpdateHikeActivity.class);
+                intent.putExtra("hikeId", hikeId);
+                startActivity(intent);
+            }
+        });
     }
 
     private void enscapData() {
