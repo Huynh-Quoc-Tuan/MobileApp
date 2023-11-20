@@ -104,7 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.close();
 
-        // Trả về true nếu có ít nhất một dòng được cập nhật, ngược lại trả về false
+        // Return true if at least one line is updated, otherwise return false
         return rowsAffected > 0;
     }
 
