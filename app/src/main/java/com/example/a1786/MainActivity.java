@@ -1,15 +1,19 @@
 package com.example.a1786;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
         // Set the content view to the activity_main layout
         setContentView(R.layout.hiking123);
         findById();
+
+        dateOfTheHike.setOnClickListener(v -> showDatePickerDialog());
 
         viewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +71,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void showDatePickerDialog() {
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
+                        dateOfTheHike.setText(selectedDate);
+                    }
+                },
+                currentYear, currentMonth, currentDay
+        );
+
+        datePickerDialog.show();
     }
 
     private void switchConfirmPage() {
