@@ -23,10 +23,21 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <activity android:name=".ConfirmHikingActivity" />
         <activity android:name=".AddHikeActivity" />
         <activity android:name=".ViewDetailHikeActivity"/>
         <activity android:name=".UpdateHikeActivity"/>
+=======
+        <activity android:name=".ConfirmHikingActivity"
+            android:exported="true"/>
+        <activity android:name=".ShowHikesActivity"
+            android:exported="true"/>
+        <activity android:name=".ViewDetailHikeActivity"
+            android:exported="true"/>
+        <activity android:name=".UpdateHikeActivity"
+            android:exported="true"/>
+>>>>>>> 2daa3f0d014794387cdea3b9a03304f7af0564fd
 
     </application>
 

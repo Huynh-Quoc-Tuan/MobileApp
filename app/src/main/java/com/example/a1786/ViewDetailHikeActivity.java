@@ -77,6 +77,8 @@ public class ViewDetailHikeActivity extends Activity {
 
                 // Navigate to the Edit Hike activity and send Hike information via Intent
                 Intent intent = new Intent(ViewDetailHikeActivity.this, UpdateHikeActivity.class);
+                intent.putExtra("hikeId", hikeId);
+                startActivity(intent);
                 intent.putExtra("selected_hike", hikeId);
                 startActivityForResult(intent,UPDATE_HIKE_REQUEST);
             }
@@ -88,6 +90,25 @@ public class ViewDetailHikeActivity extends Activity {
 //                updateHikeList();
 //                adapter.notifyDataSetChanged();
                 onBackPressed();
+            }
+        });
+    }
+
+    private void enscapData() {
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        hikeList = dbHelper.getAllHikes();
+
+
+    }
+    private void updateHikeList() {
+        // Đặt logic cập nhật danh sách Hike ở đây
+        // ...
+
+        // Sau khi cập nhật, sử dụng Handler để thông báo về thay đổi trên luồng UI chính
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -104,6 +125,7 @@ public class ViewDetailHikeActivity extends Activity {
 //            }
 //        });
 //    }
+
 
     private void deleteHike() {
         Intent intent = getIntent();
