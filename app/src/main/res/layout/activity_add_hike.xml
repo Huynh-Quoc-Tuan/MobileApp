@@ -217,7 +217,9 @@
                         android:id="@+id/viewBtn"
                         android:layout_width="120dp"
                         android:layout_height="60dp"
-                        android:text="View"
+                        android:text="Back"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/normal"
                         app:cornerRadius="32dp" />
 
                     <View
@@ -229,6 +231,8 @@
                         android:layout_width="120dp"
                         android:layout_height="60dp"
                         android:text="Submit"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/teal_700"
                         app:cornerRadius="32dp" />
                 </LinearLayout>
 

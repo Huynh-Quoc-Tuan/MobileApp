@@ -86,7 +86,7 @@ public class ViewDetailHikeActivity extends Activity {
             @Override
             public void onClick(View view) {
 //                updateHikeList();
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
                 onBackPressed();
             }
         });

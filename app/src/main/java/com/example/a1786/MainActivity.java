@@ -1,154 +1,108 @@
 package com.example.a1786;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Calendar;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private ListView listView;
 
-    private Button viewBtn, submitBtn;
-    private RadioGroup levelOfDiff, parkingAvailable;
-    private RadioButton levelOfDiff1, levelOfDiff2, levelOfDiff3, parkingAvailableYes, parkingAvailableNo;
-    private EditText nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription;
+    private HikeAdapter adapter;
+    private List<Hiking> hikeList;
+    private DatabaseHelper db;
+    private SearchView searchView;
+    private List<Hiking> filteredHikes;
+    private BottomNavigationView bottomNavigationView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set the content view to the activity_main layout
-        setContentView(R.layout.hiking123);
-        findById();
+        setContentView(R.layout.activity_view_hikes);
 
-        dateOfTheHike.setOnClickListener(v -> showDatePickerDialog());
+        db = new DatabaseHelper(this);
+        listView = findViewById(R.id.listView);
+        searchView = findViewById(R.id.searchView);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        viewBtn.setOnClickListener(new View.OnClickListener() {
+        hikeList = db.getAllHikes();
+
+        adapter = new HikeAdapter(this, hikeList);
+        listView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.menu_home) {
+                        return true;
+                    } else if (itemId == R.id.menu_addHike) {
+                        Intent hikeListIntent = new Intent(this, AddHikeActivity.class);
+                        startActivity(hikeListIntent);
+                        return true;
+                    }
+            return false;
+        });
+
+        bottomNavigationView.setSelectedItemId(R.id.menu_home);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ShowHikesActivity.class);
-//                intent.putExtra("HikeID", 3);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the ID of the selected Hike
+                int selectedHikeId = hikeList.get(position).getId();
+
+                // Switch to the detail screen of the Hike and pass the ID
+                Intent intent = new Intent(MainActivity.this, ViewDetailHikeActivity.class);
+                intent.putExtra("HikeID", selectedHikeId);
                 startActivity(intent);
             }
         });
-        submitBtn.setOnClickListener(new View.OnClickListener() {
+
+        filteredHikes = new ArrayList<>();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                if (InputValidatorEditText.areAllEditTextsFilled(nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription)){
-                    if (!InputValidatorEditText.isEditTextLengthValid(nameOfTheHike, 100)) {
-                        nameOfTheHike.setError("Tên quá dài, vui lòng nhập ít hơn " + 100 + " ký tự.");
-                        return;
-                    }
+            public boolean onQueryTextSubmit(String query) {
+                // Handle when the user clicks the search button (if necessary)
+                return false;
+            }
 
-                    if (!InputValidatorEditText.isEditTextLengthValid(locationOfTheHike, 100)) {
-                        locationOfTheHike.setError("Địa điểm quá dài, vui lòng nhập ít hơn " + 100 + " ký tự.");
-                        return;
-                    }
-
-                    if (!InputValidatorEditText.isEditTextLengthValid(decription, 200)) {
-                        decription.setError("Mô tả quá dài, vui lòng nhập ít hơn " + 200 + " ký tự.");
-                        return;
-                    }
-
-                    if (!InputValidatorEditText.isEditTextLengthValid(decription, 200)) {
-                        decription.setError("Mô tả quá dài, vui lòng nhập ít hơn " + 200 + " ký tự.");
-                        return;
-                    }
-                    switchConfirmPage();
-
-                } else {
-                    // Hiển thị thông báo hoặc thông báo lỗi cho người dùng
-                    Toast.makeText(MainActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-                }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                // Handle when the user changes the search content
+                filterHikes(newText);
+                return false;
             }
         });
     }
 
-    private void showDatePickerDialog() {
-        Calendar calendar = Calendar.getInstance();
-        int currentYear = calendar.get(Calendar.YEAR);
-        int currentMonth = calendar.get(Calendar.MONTH);
-        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        String selectedDate = dayOfMonth + "/" + (month + 1) + "/" + year;
-                        dateOfTheHike.setText(selectedDate);
-                    }
-                },
-                currentYear, currentMonth, currentDay
-        );
-
-        datePickerDialog.show();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 
-    private void switchConfirmPage() {
-        // Get information from Edit Text
-        String name = nameOfTheHike.getText().toString();
-        String location = locationOfTheHike.getText().toString();
-        String dateofhike = dateOfTheHike.getText().toString();
-        String decrip = decription.getText().toString();
-        String lenght = lengthOfTheHike.getText().toString();
 
-        // Get infor from Radio Button
-        String level = "", parking = "";
-        int selectedLevelRadioId = levelOfDiff.getCheckedRadioButtonId();
-        int selectedParkingRadioId = parkingAvailable.getCheckedRadioButtonId();
-
-        if (selectedLevelRadioId != -1 && selectedParkingRadioId != -1) {
-            RadioButton selectedLevelRadioButton = findViewById(selectedLevelRadioId);
-            RadioButton selectedParkingRadioButton = findViewById(selectedParkingRadioId);
-            level = selectedLevelRadioButton.getText().toString();
-            parking = selectedParkingRadioButton.getText().toString();
+    private void filterHikes(String query) {
+        filteredHikes.clear();
+        for (Hiking hike : hikeList) {
+            if (hike.getName().toLowerCase().contains(query.toLowerCase()) || hike.getLocation().toLowerCase().contains(query.toLowerCase())
+                    || hike.getLength().toLowerCase().contains(query.toLowerCase()) || hike.getDate().toLowerCase().contains(query.toLowerCase())) {
+                filteredHikes.add(hike);
+            }
         }
-
-        // Start the ViewHikesActivity when the button is clicked
-        Intent intent = new Intent(MainActivity.this, ConfirmHikingActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("NAME", name);
-        bundle.putString("LOCATION", location);
-        bundle.putString("DATE", dateofhike);
-        bundle.putString("LENGTH", lenght);
-        bundle.putString("DESCRIP", decrip);
-        bundle.putString("LEVEL", level);
-        bundle.putString("PARKING", parking);
-        intent.putExtras(bundle);
-
-        startActivity(intent);
-    }
-
-    private void findById() {
-        nameOfTheHike = findViewById(R.id.nameOfTheHike);
-        lengthOfTheHike = findViewById(R.id.lengthTheHike);
-        locationOfTheHike = findViewById(R.id.location);
-        dateOfTheHike = findViewById(R.id.dateOfTheHike);
-        decription = findViewById(R.id.decription);
-        submitBtn = findViewById(R.id.submitBtn);
-        viewBtn = findViewById(R.id.viewBtn);
-
-        parkingAvailable = findViewById(R.id.parkingAvailable);
-        parkingAvailableYes = findViewById(R.id.parkingAvailableYes);
-        parkingAvailableNo = findViewById(R.id.parkingAvailableNo);
-
-        levelOfDiff = findViewById(R.id.levelOfDiff);
-        levelOfDiff1= findViewById(R.id.levelOfDiff1);
-        levelOfDiff2 = findViewById(R.id.levelOfDiff2);
-        levelOfDiff3 = findViewById(R.id.levelOfDiff3);
-
-        parkingAvailableYes.setChecked(true);
-        levelOfDiff1.setChecked(true);
+        adapter = new HikeAdapter(this, filteredHikes);
+        listView.setAdapter(adapter);
     }
 }
 

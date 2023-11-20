@@ -24,7 +24,7 @@
         </activity>
 
         <activity android:name=".ConfirmHikingActivity" />
-        <activity android:name=".ShowHikesActivity" />
+        <activity android:name=".AddHikeActivity" />
         <activity android:name=".ViewDetailHikeActivity"/>
         <activity android:name=".UpdateHikeActivity"/>
 

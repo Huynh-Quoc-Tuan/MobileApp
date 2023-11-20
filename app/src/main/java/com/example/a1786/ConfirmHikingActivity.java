@@ -82,7 +82,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                         if(result) {
 
                             Toast.makeText(ConfirmHikingActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(ConfirmHikingActivity.this, ShowHikesActivity.class);
+                            Intent intent = new Intent(ConfirmHikingActivity.this, AddHikeActivity.class);
                             startActivity(intent);
                         }
                         else
@@ -122,7 +122,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
     }
 
     private void goToViewPage() {
-        Intent intent = new Intent(ConfirmHikingActivity.this, ShowHikesActivity.class);
+        Intent intent = new Intent(ConfirmHikingActivity.this, AddHikeActivity.class);
         startActivity(intent);
     }
 }
