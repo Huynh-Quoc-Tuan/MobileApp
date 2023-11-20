@@ -138,7 +138,8 @@
                         android:layout_height="wrap_content"
                         android:alpha="0.7"
                         android:paddingRight="20dp"
-                        android:text="Easy" />
+                        android:text="Easy"
+                        android:enabled="false"/>
 
                     <RadioButton
                         android:id="@+id/levelOfDiff2"
@@ -146,14 +147,16 @@
                         android:layout_height="wrap_content"
                         android:alpha="0.7"
                         android:paddingRight="20dp"
-                        android:text="Normal" />
+                        android:text="Normal"
+                        android:enabled="false"/>
 
                     <RadioButton
                         android:id="@+id/levelOfDiff3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:alpha="0.7"
-                        android:text="Hard" />
+                        android:text="Hard"
+                        android:enabled="false"/>
 
 
                 </RadioGroup>
@@ -178,14 +181,16 @@
                     android:layout_height="wrap_content"
                     android:alpha="0.7"
                     android:paddingRight="29dp"
-                    android:text="Yes" />
+                    android:text="Yes"
+                    android:enabled="false"/>
 
                 <RadioButton
                     android:id="@+id/parkingAvailableNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.7"
-                    android:text="No" />
+                    android:text="No"
+                    android:enabled="false"/>
 
             </RadioGroup>
 
@@ -214,7 +219,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/backBtn"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="60dp"
                     android:text="Back"
                     app:cornerRadius="32dp" />
@@ -225,7 +230,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/editHikeBtn"
-                    android:layout_width="100dp"
+                    android:layout_width="90dp"
                     android:layout_height="60dp"
                     android:text="Edit"
                     app:cornerRadius="32dp" />
@@ -236,7 +241,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/removeHikeBtn"
-                    android:layout_width="100dp"
+                    android:layout_width="105dp"
                     android:layout_height="60dp"
                     android:text="Remove"
                     app:cornerRadius="32dp" />

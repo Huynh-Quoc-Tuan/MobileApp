@@ -30,41 +30,31 @@ public class UpdateHikeActivity extends AppCompatActivity {
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper databaseHelper = new DatabaseHelper(UpdateHikeActivity.this);
-                parkingAvailable = findViewById(R.id.parkingAvailable);
-                levelOfDiff = findViewById(R.id.levelOfDiff);
+                if (InputValidatorEditText.areAllEditTextsFilled(nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription)){
+                    if (!InputValidatorEditText.isEditTextLengthValid(nameOfTheHike, 100)) {
+                        nameOfTheHike.setError("Tên quá dài, vui lòng nhập ít hơn " + 100 + " ký tự.");
+                        return;
+                    }
 
-                int hikeId = hikeid();
-                String name = nameOfTheHike.getText().toString();
-                String location = locationOfTheHike.getText().toString();
-                String date = dateOfTheHike.getText().toString();
-                String length = lengthOfTheHike.getText().toString();
-                String description = decription.getText().toString();
+                    if (!InputValidatorEditText.isEditTextLengthValid(locationOfTheHike, 100)) {
+                        locationOfTheHike.setError("Địa điểm quá dài, vui lòng nhập ít hơn " + 100 + " ký tự.");
+                        return;
+                    }
 
+                    if (!InputValidatorEditText.isEditTextLengthValid(decription, 200)) {
+                        decription.setError("Mô tả quá dài, vui lòng nhập ít hơn " + 200 + " ký tự.");
+                        return;
+                    }
 
+                    if (!InputValidatorEditText.isEditTextLengthValid(decription, 200)) {
+                        decription.setError("Mô tả quá dài, vui lòng nhập ít hơn " + 200 + " ký tự.");
+                        return;
+                    }
+                    activityUpdate();
 
-                String level = "", parking = "";
-                int selectedLevelRadioId = levelOfDiff.getCheckedRadioButtonId();
-                int selectedParkingRadioId = parkingAvailable.getCheckedRadioButtonId();
-
-                if (selectedLevelRadioId != -1 && selectedParkingRadioId != -1) {
-                    RadioButton selectedLevelRadioButton = findViewById(selectedLevelRadioId);
-                    RadioButton selectedParkingRadioButton = findViewById(selectedParkingRadioId);
-                    level = selectedLevelRadioButton.getText().toString();
-                    parking = selectedParkingRadioButton.getText().toString();
-                }
-
-                // Call the update method in the database
-                Boolean updateSuccess  = databaseHelper.updateHike(hikeId, name, location, date, length, level, parking, description);
-
-                if (updateSuccess) {
-                    Toast.makeText(UpdateHikeActivity.this, "Data Updated", Toast.LENGTH_LONG).show();
-                    Intent resultIntent = new Intent();
-                    setResult(Activity.RESULT_OK, resultIntent);
-                    onBackPressed();
-                    finish();
                 } else {
-                    Toast.makeText(UpdateHikeActivity.this, "Data CAN NOT UPDATE", Toast.LENGTH_LONG).show();
+                    // Hiển thị thông báo hoặc thông báo lỗi cho người dùng
+                    Toast.makeText(UpdateHikeActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -75,6 +65,45 @@ public class UpdateHikeActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+    }
+
+    private void activityUpdate() {
+        DatabaseHelper databaseHelper = new DatabaseHelper(UpdateHikeActivity.this);
+        parkingAvailable = findViewById(R.id.parkingAvailable);
+        levelOfDiff = findViewById(R.id.levelOfDiff);
+
+        int hikeId = hikeid();
+        String name = nameOfTheHike.getText().toString();
+        String location = locationOfTheHike.getText().toString();
+        String date = dateOfTheHike.getText().toString();
+        String length = lengthOfTheHike.getText().toString();
+        String description = decription.getText().toString();
+
+
+
+        String level = "", parking = "";
+        int selectedLevelRadioId = levelOfDiff.getCheckedRadioButtonId();
+        int selectedParkingRadioId = parkingAvailable.getCheckedRadioButtonId();
+
+        if (selectedLevelRadioId != -1 && selectedParkingRadioId != -1) {
+            RadioButton selectedLevelRadioButton = findViewById(selectedLevelRadioId);
+            RadioButton selectedParkingRadioButton = findViewById(selectedParkingRadioId);
+            level = selectedLevelRadioButton.getText().toString();
+            parking = selectedParkingRadioButton.getText().toString();
+        }
+
+        // Call the update method in the database
+        Boolean updateSuccess  = databaseHelper.updateHike(hikeId, name, location, date, length, level, parking, description);
+
+        if (updateSuccess) {
+            Toast.makeText(UpdateHikeActivity.this, "Data Updated", Toast.LENGTH_LONG).show();
+            Intent resultIntent = new Intent();
+            setResult(Activity.RESULT_OK, resultIntent);
+            onBackPressed();
+            finish();
+        } else {
+            Toast.makeText(UpdateHikeActivity.this, "Data CAN NOT UPDATE", Toast.LENGTH_LONG).show();
+        }
     }
 
     private int hikeid(){

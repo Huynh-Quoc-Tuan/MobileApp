@@ -13,12 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ConfirmHikingActivity extends AppCompatActivity {
 
-    private Button viewHikesButton, addHikeButton;
+    private Button backBtn, addHikeButton;
     private RadioGroup levelOfDiff, parkingAvailable;
     private RadioButton levelOfDiff1, levelOfDiff2, levelOfDiff3, parkingAvailableYes, parkingAvailableNo;
     private TextView nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription;
     private DatabaseHelper databaseHelper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +90,13 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                         dbHelper.close();
                     }
                 });
+
+                backBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onBackPressed();
+                    }
+                });
             }
         }
     }
@@ -102,6 +108,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
         dateOfTheHike = findViewById(R.id.dateOfTheHikeTextView);
         decription = findViewById(R.id.decriptionTextView);
         addHikeButton = findViewById(R.id.addHikeButton);
+        backBtn = findViewById(R.id.backBtn);
 
 
         parkingAvailable = findViewById(R.id.parkingAvailable);
