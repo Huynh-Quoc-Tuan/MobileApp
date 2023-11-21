@@ -66,5 +66,5 @@
         app:srcCompat="@drawable/addpicture"
         app:shapeAppearanceOverlay="@style/RoundedCorner" />
 
-    <!-- Đảm bảo include layout_base được đặt ở đúng vị trí -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
