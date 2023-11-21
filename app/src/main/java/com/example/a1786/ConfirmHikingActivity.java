@@ -82,7 +82,7 @@ public class ConfirmHikingActivity extends AppCompatActivity {
                         if(result) {
 
                             Toast.makeText(ConfirmHikingActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(ConfirmHikingActivity.this, AddHikeActivity.class);
+                            Intent intent = new Intent(ConfirmHikingActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
                         else

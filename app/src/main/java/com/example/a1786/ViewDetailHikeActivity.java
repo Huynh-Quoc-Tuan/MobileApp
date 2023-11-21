@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.util.List;
 
 public class ViewDetailHikeActivity extends Activity {
@@ -81,6 +83,16 @@ public class ViewDetailHikeActivity extends Activity {
                 startActivity(intent);
                 intent.putExtra("selected_hike", hikeId);
                 startActivityForResult(intent,UPDATE_HIKE_REQUEST);
+            }
+        });
+        MaterialButton viewObservationButton = findViewById(R.id.viewObservation);
+        viewObservationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int hikeId = hikeid();
+                Intent intent = new Intent(ViewDetailHikeActivity.this, ObservationsListActivity.class);
+                intent.putExtra("hikeId", hikeId);
+                startActivity(intent);
             }
         });
 

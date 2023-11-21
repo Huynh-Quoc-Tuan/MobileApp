@@ -22,12 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 594cde5c037aa647fd3fd3fbb0745658bcefd27a
         <activity android:name=".ConfirmHikingActivity" />
         <activity android:name=".AddHikeActivity" />
         <activity android:name=".ViewDetailHikeActivity"/>
         <activity android:name=".UpdateHikeActivity"/>
+<<<<<<< HEAD
 
+=======
+        <activity android:name=".AddObservationActivity"/>
+        <activity android:name=".EditObservationActivity"/>
+        <activity android:name=".ObservationsListActivity"/>
+        <activity android:name=".ObservationDetailActivity"/>
+>>>>>>> 594cde5c037aa647fd3fd3fbb0745658bcefd27a
     </application>
 
 </manifest>

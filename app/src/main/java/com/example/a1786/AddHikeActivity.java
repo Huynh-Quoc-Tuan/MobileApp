@@ -44,29 +44,29 @@ public class AddHikeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (InputValidatorEditText.areAllEditTextsFilled(nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription)){
                     if (!InputValidatorEditText.isEditTextLengthValid(nameOfTheHike, 100)) {
-                        nameOfTheHike.setError("Tên quá dài, vui lòng nhập ít hơn " + 100 + " ký tự.");
+                        nameOfTheHike.setError("The name is too long, please enter fewer than " + 100 + " characters.");
                         return;
                     }
 
                     if (!InputValidatorEditText.isEditTextLengthValid(locationOfTheHike, 100)) {
-                        locationOfTheHike.setError("Địa điểm quá dài, vui lòng nhập ít hơn " + 100 + " ký tự.");
+                        locationOfTheHike.setError("The location is too long, please enter fewer than " + 100 + " characters.");
                         return;
                     }
 
                     if (!InputValidatorEditText.isEditTextLengthValid(decription, 200)) {
-                        decription.setError("Mô tả quá dài, vui lòng nhập ít hơn " + 200 + " ký tự.");
+                        decription.setError("The description is too long, please enter fewer than " + 200 + " characters.");
                         return;
                     }
 
                     if (!InputValidatorEditText.isEditTextLengthValid(decription, 200)) {
-                        decription.setError("Mô tả quá dài, vui lòng nhập ít hơn " + 200 + " ký tự.");
+                        decription.setError("The description is too long, please enter fewer than " + 200 + " characters.");
                         return;
                     }
                     switchConfirmPage();
 
                 } else {
-                    // Hiển thị thông báo hoặc thông báo lỗi cho người dùng
-                    Toast.makeText(AddHikeActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    // Show a notification or error message to the user
+                    Toast.makeText(AddHikeActivity.this, "Please fill in all the required information", Toast.LENGTH_SHORT).show();
                 }
             }
         });

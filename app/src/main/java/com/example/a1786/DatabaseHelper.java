@@ -20,6 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Table name
     private static final String TABLE_HIKES = "hikes";
+    public static final String TABLE_OBSERVATIONS = "observations";
 
     // Hikes Table Columns names
     private static final String KEY_ID = "id";
@@ -43,6 +44,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + KEY_LOCATION + " TEXT," + KEY_DATE + " TEXT," + KEY_LENGTH + " TEXT,"
                 + KEY_LEVEL + " TEXT," + KEY_PARKING + " TEXT," + KEY_DESCRIPTION + " TEXT" + ")";
         db.execSQL(CREATE_HIKES_TABLE);
+        String CREATE_OBSERVATIONS_TABLE =
+                "CREATE TABLE " + TABLE_OBSERVATIONS + " (observation_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "hike_id INTEGER, observation TEXT, time_of_observation TEXT, additional_comments TEXT, " +
+                        "image BLOB, " +
+                        "FOREIGN KEY (hike_id) REFERENCES " + TABLE_HIKES + " (hike_id));";
+        db.execSQL(CREATE_OBSERVATIONS_TABLE);
     }
 
     @Override
@@ -118,7 +125,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean deleteHikeById(int hikeId) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            int rowsAffected = db.delete("hikes", "id = ?", new String[]{String.valueOf(hikeId)});
+            int rowsAffected = db.delete(TABLE_HIKES, "id = ?", new String[]{String.valueOf(hikeId)});
             db.close();
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -157,10 +164,128 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return hikeList;
     }
 
+    //------------------------------OBSERVATION-----------------------------------------------------
+    // Add a Observation
+    public long addObservation(Observation observation) {
+        long result = -1;
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("hike_id", observation.getHikeId());
+        values.put("observation", observation.getObservation());
+        values.put("time_of_observation", observation.getTimeOfObservation());
+        values.put("additional_comments", observation.getAdditionalComments());
+        values.put("image", observation.getImageBytes());
+
+        try {
+            result = db.insert(TABLE_OBSERVATIONS, null, values);
+        } catch (Exception e) {
+        } finally {
+            db.close();
+        }
+
+        return result;
+    }
+    public boolean addImageToObservation(int observationId, byte[] imageBytes) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("image", imageBytes);
+
+        int rowsAffected = db.update(TABLE_OBSERVATIONS, values, "observation_id = ?",
+                new String[]{String.valueOf(observationId)});
+
+        db.close();
+
+        return rowsAffected > 0;
+    }
+
+
+    // Update a Observation
+    public boolean updateObservation(Observation observation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("observation", observation.getObservation());
+        values.put("time_of_observation", observation.getTimeOfObservation());
+        values.put("additional_comments", observation.getAdditionalComments());
+        values.put("image", observation.getImageBytes());
+
+        int rowsAffected = db.update(TABLE_OBSERVATIONS, values, "observation_id = ?",
+                new String[]{String.valueOf(observation.getObservationId())});
+
+        db.close();
+
+        return rowsAffected > 0;
+    }
+
+    public void deleteObservation(int observationId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_OBSERVATIONS, "observation_id = ?", new String[]{String.valueOf(observationId)});
+        db.close();
+    }
+
+    public Observation getObservationById(int observationId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_OBSERVATIONS, null, "observation_id = ?",
+                new String[]{String.valueOf(observationId)}, null, null, null);
+
+        Observation observation = null;
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                observation = cursorToObservation(cursor);
+            }
+            cursor.close();
+        }
+
+        db.close();
+
+        return observation;
+    }
+
+    public List<Observation> getAllObservations() {
+        List<Observation> observations = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_OBSERVATIONS, null, null, null, null, null, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                Observation observation = cursorToObservation(cursor);
+                observations.add(observation);
+            }
+            cursor.close();
+        }
+
+        db.close();
+
+        return observations;
+    }
+
+    // Trong DatabaseHelper
+    public List<Observation> getAllObservationsForHike(int hikeId) {
+        List<Observation> observations = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_OBSERVATIONS + " WHERE hike_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(hikeId)});
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                Observation observation = cursorToObservation(cursor);
+                observations.add(observation);
+            }
+            cursor.close();
+        }
+
+        db.close();
+
+        return observations;
+    }
+
+
     @SuppressLint("Range")
     public Hiking getHikeById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("hike", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
+        Cursor cursor = db.query("hikes", null, "id = ?", new String[]{String.valueOf(id)}, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
             Hiking hike = new Hiking();
@@ -182,5 +307,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         db.close();
         return null;
+    }
+    @SuppressLint("Range")
+    private Observation cursorToObservation(Cursor cursor) {
+        Observation observation = new Observation();
+        observation.setObservationId(cursor.getInt(cursor.getColumnIndex("observation_id")));
+        observation.setObservation(cursor.getString(cursor.getColumnIndex("observation")));
+        observation.setTimeOfObservation(cursor.getString(cursor.getColumnIndex("time_of_observation")));
+        observation.setAdditionalComments(cursor.getString(cursor.getColumnIndex("additional_comments")));
+        observation.setImageBytes(cursor.getBlob(cursor.getColumnIndex("image")));
+
+        // Retrieve the associated Hike
+        int hikeId = cursor.getInt(cursor.getColumnIndex("hike_id"));
+        Hiking hike = getHikeById(hikeId);
+        observation.setHike(hike);
+
+        return observation;
     }
 }
