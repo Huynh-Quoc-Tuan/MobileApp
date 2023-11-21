@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ViewDetailHikeActivity extends Activity {
     private TextView nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription;
-    private Button removeBtn, editBtn, backBtn;
+    private Button removeBtn, editBtn, backBtn, obserBtn;
     private HikeAdapter adapter;
     private List<Hiking> hikeList;
     static final int UPDATE_HIKE_REQUEST = 1;  // Request code to identify the result
@@ -51,6 +51,7 @@ public class ViewDetailHikeActivity extends Activity {
         removeBtn = findViewById(R.id.removeHikeBtn);
         editBtn = findViewById(R.id.editHikeBtn);
         backBtn = findViewById(R.id.backBtn);
+        obserBtn = findViewById(R.id.viewObservation);
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
