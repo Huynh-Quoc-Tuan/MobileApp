@@ -100,11 +100,11 @@
         <ImageView
             android:id="@+id/imageObservation"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_placeholder"
+            android:layout_height="271dp"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"/>
+            android:paddingBottom="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_placeholder" />
 
     </LinearLayout>
 

@@ -69,7 +69,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_placeholder"
+        android:src="@drawable/addpicture"
         android:background="?android:selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
@@ -79,7 +79,7 @@
         android:id="@+id/addObservationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save Observation"
+        android:text="Save"
         android:layout_gravity="center"/>
 
 </LinearLayout>

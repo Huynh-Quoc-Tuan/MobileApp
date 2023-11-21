@@ -248,10 +248,10 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/viewObservation"
-                    android:layout_width="105dp"
+                    android:layout_width="125dp"
                     android:layout_height="60dp"
                     android:text="Observation"
-                    app:cornerRadius="32dp" />
+                    app:cornerRadius="31dp" />
             </LinearLayout>
 
             <View
