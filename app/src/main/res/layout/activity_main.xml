@@ -17,6 +17,7 @@
             android:textSize="20dp"
             android:gravity="center"
             android:text="HOME PAGE"
+            android:background="@color/purple_500"
             android:textStyle="bold" />
 
         <android.widget.SearchView
@@ -52,6 +53,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="75dp"
+        android:background="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

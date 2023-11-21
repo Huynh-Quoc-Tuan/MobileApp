@@ -219,7 +219,7 @@
                         android:layout_height="60dp"
                         android:text="Back"
                         android:textColor="@color/black"
-                        android:backgroundTint="@color/normal"
+                        android:backgroundTint="@color/purple_500"
                         app:cornerRadius="32dp" />
 
                     <View
@@ -232,7 +232,7 @@
                         android:layout_height="60dp"
                         android:text="Submit"
                         android:textColor="@color/black"
-                        android:backgroundTint="@color/teal_700"
+                        android:backgroundTint="@color/purple_500"
                         app:cornerRadius="32dp" />
                 </LinearLayout>
 
