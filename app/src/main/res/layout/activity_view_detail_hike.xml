@@ -215,8 +215,19 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end">
+                android:gravity="end"
+                android:layout_gravity="right">
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/backBtn"
+                    android:layout_width="90dp"
+                    android:layout_height="60dp"
+                    android:text="Back"
+                    app:cornerRadius="32dp" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="10dp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/editHikeBtn"
@@ -240,12 +251,6 @@
                     android:layout_width="5dp"
                     android:layout_height="10dp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/viewObservation"
-                    android:layout_width="125dp"
-                    android:layout_height="60dp"
-                    android:text="Observation"
-                    app:cornerRadius="31dp" />
 
             </LinearLayout>
 
@@ -254,12 +259,13 @@
                 android:layout_height="15dp" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/backBtn"
-                android:layout_width="90dp"
+                android:id="@+id/viewObservation"
+                android:layout_width="135dp"
                 android:layout_height="60dp"
-                android:layout_gravity="right"
-                android:text="Back"
-                app:cornerRadius="32dp" />
+                android:text="Observation"
+                app:cornerRadius="31dp"
+                android:layout_gravity="right"/>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
