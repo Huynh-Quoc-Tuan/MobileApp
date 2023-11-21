@@ -32,29 +32,29 @@ public class UpdateHikeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (InputValidatorEditText.areAllEditTextsFilled(nameOfTheHike, locationOfTheHike, dateOfTheHike, lengthOfTheHike, decription)){
                     if (!InputValidatorEditText.isEditTextLengthValid(nameOfTheHike, 100)) {
-                        nameOfTheHike.setError("Tên quá dài, vui lòng nhập ít hơn " + 100 + " ký tự.");
+                        nameOfTheHike.setError("Name is too long, please enter less than \" + 100 + \" characters.");
                         return;
                     }
 
                     if (!InputValidatorEditText.isEditTextLengthValid(locationOfTheHike, 100)) {
-                        locationOfTheHike.setError("Địa điểm quá dài, vui lòng nhập ít hơn " + 100 + " ký tự.");
+                        locationOfTheHike.setError("Location is too long, please enter less than \" + 100 + \" characters.");
                         return;
                     }
 
                     if (!InputValidatorEditText.isEditTextLengthValid(decription, 200)) {
-                        decription.setError("Mô tả quá dài, vui lòng nhập ít hơn " + 200 + " ký tự.");
+                        decription.setError("Description is too long, please enter less than \" + 200 + \" characters.");
                         return;
                     }
 
                     if (!InputValidatorEditText.isEditTextLengthValid(decription, 200)) {
-                        decription.setError("Mô tả quá dài, vui lòng nhập ít hơn " + 200 + " ký tự.");
+                        decription.setError("Description is too long, please enter less than \" + 200 + \" characters.");
                         return;
                     }
                     activityUpdate();
 
                 } else {
                     // Hiển thị thông báo hoặc thông báo lỗi cho người dùng
-                    Toast.makeText(UpdateHikeActivity.this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateHikeActivity.this, "Please complete all information", Toast.LENGTH_SHORT).show();
                 }
             }
         });

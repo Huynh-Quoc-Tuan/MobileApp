@@ -179,6 +179,7 @@ public class AddObservationActivity extends AppCompatActivity{
         finish();
     }
 
+
     private byte[] getPhotoByteArray() {
         Bitmap photoBitmap = ((BitmapDrawable) selectedImageView.getDrawable()).getBitmap();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
