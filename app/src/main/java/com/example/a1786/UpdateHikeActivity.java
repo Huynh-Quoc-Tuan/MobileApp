@@ -160,7 +160,7 @@ public class UpdateHikeActivity extends AppCompatActivity {
                 startActivity(hikeInfoIntent);
             }
         } else {
-            // Handle the case when ID is not received from Intent
+            // Handle the case when ID is not received from 
             Toast.makeText(this, "No ID is passed", Toast.LENGTH_SHORT).show();
             Intent hikeInfoIntent = new Intent(this, MainActivity.class);
             startActivity(hikeInfoIntent);
