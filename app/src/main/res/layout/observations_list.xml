@@ -44,10 +44,10 @@
         android:layout_height="733dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonAddObservation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_layout"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.403"
         tools:listitem="@layout/observation_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
