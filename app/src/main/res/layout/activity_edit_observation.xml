@@ -1,0 +1,83 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <!-- Back Button -->
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_arrow"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
+
+        <!-- Toolbar Title -->
+        <TextView
+            android:id="@+id/toolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit Observation"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginTop="?attr/actionBarSize">
+
+    <EditText
+        android:id="@+id/editTextObservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Observation" />
+
+    <EditText
+        android:id="@+id/editTextTimeOfObservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Time of Observation" />
+
+    <EditText
+        android:id="@+id/editTextAdditionalComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Additional Comments" />
+
+    <!-- ImageView to display/edit imageBytes -->
+    <ImageView
+        android:id="@+id/imageViewObservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_placeholder"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true" />
+
+    <Button
+        android:id="@+id/buttonSaveObservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_gravity="center" />
+
+
+</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

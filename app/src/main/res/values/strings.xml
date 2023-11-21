@@ -5,5 +5,7 @@
     <string name="location">Location</string>
     <string name="description">Description</string>
     <string name="save">Save</string>
+    <string name="sample">Your Sample Text Here</string>
+    <string name="back">Navigate Back</string>
 
 </resources>
