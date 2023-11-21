@@ -22,10 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ConfirmHikingActivity" />
         <activity android:name=".AddHikeActivity" />
         <activity android:name=".ViewDetailHikeActivity"/>
         <activity android:name=".UpdateHikeActivity"/>
+
         <activity android:name=".AddObservationActivity"/>
         <activity android:name=".EditObservationActivity"/>
         <activity android:name=".ObservationsListActivity"/>
